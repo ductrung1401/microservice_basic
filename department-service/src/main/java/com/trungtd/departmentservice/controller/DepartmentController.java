@@ -1,6 +1,6 @@
 package com.trungtd.departmentservice.controller;
 
-import com.trungtd.departmentservice.client.EmployeeClient;
+//import com.trungtd.departmentservice.client.EmployeeClient;
 import com.trungtd.departmentservice.model.AddEmployeeDepartment;
 import com.trungtd.departmentservice.model.Department;
 import com.trungtd.departmentservice.service.DepartmentService;
@@ -20,8 +20,8 @@ public class DepartmentController {
     private static final Logger LOGGER = LoggerFactory.getLogger(DepartmentController.class);
     @Autowired
     private DepartmentService departmentService;
-    @Autowired
-    private EmployeeClient employeeClient;
+//    @Autowired
+//    private EmployeeClient employeeClient;
 
     @PostMapping("/add-department")
     public ResponseEntity<?> addDepartment(@RequestBody Department department) {

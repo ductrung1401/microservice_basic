@@ -4,6 +4,7 @@ import com.trungtd.departmentservice.custom.exception.ExistsException;
 import com.trungtd.departmentservice.model.AddEmployeeDepartment;
 import com.trungtd.departmentservice.model.Department;
 import com.trungtd.departmentservice.repository.DepartmentRepository;
+import com.trungtd.departmentservice.response.MessageResponse;
 import com.trungtd.departmentservice.service.DepartmentService;
 import jakarta.ws.rs.NotFoundException;
 import lombok.Builder;
@@ -32,8 +33,10 @@ public class DepartmentServiceImpl implements DepartmentService {
 //        return departmentOptional.get();
         Optional.ofNullable(department)
                 .filter(dep -> !departmentRepository.existsById(dep.getId()))
-                .orElseThrow(() -> new ExistsException("Department cannot be null or already exists"));
-        return department;
+                .orElseThrow(
+                        () -> new ExistsException("Department cannot be null or already exists")
+                );
+        return departmentRepository.save(department);
     }
 
     @Override
@@ -42,15 +45,14 @@ public class DepartmentServiceImpl implements DepartmentService {
         if (!departments.isEmpty())
             return departments;
         else
-            throw new NotFoundException("Khong ton tai phong ban nao torng he thong");
+            throw new NotFoundException("Khong ton tai phong ban nao trong he thong");
     }
 
     @Override
     public Department getDepartmentById(Long id) {
-        Department department = departmentRepository.findById(id).orElseThrow(
+        return departmentRepository.findById(id).orElseThrow(
                 () -> new com.trungtd.departmentservice.custom.exception.NotFoundException("Khong ton tai phong ban voi id=" + id)
         );
-        return department;
     }
 
     @Override
@@ -59,12 +61,5 @@ public class DepartmentServiceImpl implements DepartmentService {
         MessageResponse response =
                 restTemplate.postForObject("http://localhost:8082/api/v1/employee/add-to-department", req, MessageResponse.class);
         return response;
-    }
-
-    @Builder
-    public static class MessageResponse {
-        @Getter
-        @Setter
-        private String message;
     }
 }

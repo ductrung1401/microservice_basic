@@ -22,5 +22,5 @@ public class Employee {
     @Column(name = "position")
     private String position;
     @Column(name = "department_Id")
-    private Long departmentId;    //cai cho nay xu ly sao ban?
+    private Long departmentId;
 }
