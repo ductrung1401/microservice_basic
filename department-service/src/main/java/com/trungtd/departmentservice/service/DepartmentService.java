@@ -14,6 +14,6 @@ public interface DepartmentService {
 
     Department getDepartmentById(Long id);
 
-    MessageResponse addEmployeeToDepartment(AddEmployeeDepartment req);
+//    MessageResponse addEmployeeToDepartment(AddEmployeeDepartment req);
     //0021000429042
 }

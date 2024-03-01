@@ -21,9 +21,9 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class DepartmentServiceImpl implements DepartmentService {
-    private DepartmentRepository departmentRepository;
+    private final DepartmentRepository departmentRepository;
 
-    private RestTemplate restTemplate;
+//    private RestTemplate restTemplate;
 
     @Override
     public Department addDepartment(Department department) {
@@ -55,11 +55,11 @@ public class DepartmentServiceImpl implements DepartmentService {
         );
     }
 
-    @Override
-    public MessageResponse addEmployeeToDepartment(AddEmployeeDepartment req) {
-        Department department = this.getDepartmentById(req.getDepartmentId());
-        MessageResponse response =
-                restTemplate.postForObject("http://localhost:8082/api/v1/employee/add-to-department", req, MessageResponse.class);
-        return response;
-    }
+//    @Override
+//    public MessageResponse addEmployeeToDepartment(AddEmployeeDepartment req) {
+//        Department department = this.getDepartmentById(req.getDepartmentId());
+//        MessageResponse response =
+//                restTemplate.postForObject("http://localhost:8082/api/v1/employee/add-to-department", req, MessageResponse.class);
+//        return response;
+//    }
 }

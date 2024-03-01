@@ -1,6 +1,6 @@
 package com.trungtd.departmentservice.controller;
 
-//import com.trungtd.departmentservice.client.EmployeeClient;
+import com.trungtd.departmentservice.client.EmployeeClient;
 import com.trungtd.departmentservice.model.AddEmployeeDepartment;
 import com.trungtd.departmentservice.model.Department;
 import com.trungtd.departmentservice.service.DepartmentService;
@@ -18,10 +18,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class DepartmentController {
     private static final Logger LOGGER = LoggerFactory.getLogger(DepartmentController.class);
-    @Autowired
-    private DepartmentService departmentService;
-//    @Autowired
-//    private EmployeeClient employeeClient;
+    private final DepartmentService departmentService;
+    private final EmployeeClient employeeClient;
 
     @PostMapping("/add-department")
     public ResponseEntity<?> addDepartment(@RequestBody Department department) {
@@ -42,9 +40,9 @@ public class DepartmentController {
         return ResponseEntity.ok(departmentService.getDepartmentById(id));
     }
 
-    @PostMapping("/add-employee")
-    public ResponseEntity<?> addEmployee(@RequestBody AddEmployeeDepartment req) {
-
-        return ResponseEntity.ok(departmentService.addEmployeeToDepartment(req));
-    }
+//    @PostMapping("/add-employee")
+//    public ResponseEntity<?> addEmployee(@RequestBody AddEmployeeDepartment req) {
+//
+//        return ResponseEntity.ok(departmentService.addEmployeeToDepartment(req));
+//    }
 }

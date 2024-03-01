@@ -1,6 +1,6 @@
 package com.trungtd.employeeservice.custom.exception;
 
-public class ExistsException extends RuntimeException{
+public class ExistsException extends RuntimeException {
     public ExistsException(String message) {
         super(message);
     }

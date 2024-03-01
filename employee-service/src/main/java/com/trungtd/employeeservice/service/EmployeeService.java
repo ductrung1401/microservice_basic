@@ -1,10 +1,8 @@
 package com.trungtd.employeeservice.service;
 
 import com.trungtd.employeeservice.custom.exception.ExistsException;
-import com.trungtd.employeeservice.model.AddEmployeeDepartment;
 import com.trungtd.employeeservice.model.Employee;
 import com.trungtd.employeeservice.repository.EmployeeRepository;
-import com.trungtd.employeeservice.response.MessageResponse;
 import jakarta.ws.rs.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -13,10 +11,10 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
-@RequiredArgsConstructor
 @Service
+@RequiredArgsConstructor
 @Slf4j
-public class EmployeeServiceIpml {
+public class EmployeeService {
     private final EmployeeRepository employeeRepository;
 
     public Employee addEmployee(Employee employee) {
@@ -39,16 +37,5 @@ public class EmployeeServiceIpml {
         return employeeRepository.findById(id).orElseThrow(
                 () -> new com.trungtd.employeeservice.custom.exception.NotFoundException("Khong ton tai employee voi id=" + id)
         );
-    }
-
-    public MessageResponse addEmployeeToDepartment(AddEmployeeDepartment req) {
-
-        Employee employee = employeeRepository.findById(req.getEmployeeId()).orElse(null);
-        if (employee != null) {
-            employee.setDepartmentId(req.getDepartmentId());
-            employeeRepository.save(employee);
-            return MessageResponse.builder().message("SUCCESS").build();
-        }
-        return MessageResponse.builder().message("Employee is not exist").build();
     }
 }
