@@ -21,7 +21,7 @@ public class EmployeeService {
         Optional.ofNullable(employee)
                 .filter(em -> !employeeRepository.existsById(em.getId()))
                 .orElseThrow(
-                        () -> new ExistsException("Department cannot be null or already exists")
+                        () -> new ExistsException("Employee cannot be null or already exists")
                 );
         return employeeRepository.save(employee);
     }
@@ -37,5 +37,12 @@ public class EmployeeService {
         return employeeRepository.findById(id).orElseThrow(
                 () -> new com.trungtd.employeeservice.custom.exception.NotFoundException("Khong ton tai employee voi id=" + id)
         );
+    }
+
+    public List<Employee> getEmployeesByDepartment(Long departmentId) {
+        List<Employee> employees = employeeRepository.findByDepartmentId(departmentId);
+        if (employees.isEmpty())
+            throw new NotFoundException("Khong ton tai employee voi department_id=" + departmentId + " nao trong he thong");
+        return employees;
     }
 }

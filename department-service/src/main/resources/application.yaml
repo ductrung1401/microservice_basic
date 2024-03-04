@@ -14,3 +14,7 @@ spring:
     generate-ddl: true
     hibernate:
       ddl-auto: update
+
+application:
+  config:
+    employee-url: http://localhost:8082/api/v1/employee

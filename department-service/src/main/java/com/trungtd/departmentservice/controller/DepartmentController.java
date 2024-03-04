@@ -19,7 +19,6 @@ import java.util.List;
 public class DepartmentController {
     private static final Logger LOGGER = LoggerFactory.getLogger(DepartmentController.class);
     private final DepartmentService departmentService;
-    private final EmployeeClient employeeClient;
 
     @PostMapping("/add-department")
     public ResponseEntity<?> addDepartment(@RequestBody Department department) {
@@ -38,6 +37,11 @@ public class DepartmentController {
     public ResponseEntity<?> getDepartmentById(@PathVariable Long id) {
         LOGGER.info("Department find: id={}", id);
         return ResponseEntity.ok(departmentService.getDepartmentById(id));
+    }
+
+    @GetMapping("/with-employee/{departmentId}")
+    public ResponseEntity<?> getDepartmentWithEmployees(@PathVariable Long departmentId) {
+        return ResponseEntity.ok(departmentService.getDepartmentWithEmployees(departmentId));
     }
 
 //    @PostMapping("/add-employee")

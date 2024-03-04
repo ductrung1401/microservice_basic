@@ -1,19 +1,15 @@
 package com.trungtd.departmentservice.service.implement;
 
+import com.trungtd.departmentservice.client.EmployeeClient;
 import com.trungtd.departmentservice.custom.exception.ExistsException;
-import com.trungtd.departmentservice.model.AddEmployeeDepartment;
 import com.trungtd.departmentservice.model.Department;
+import com.trungtd.departmentservice.model.Employee;
+import com.trungtd.departmentservice.model.FullFieldDepartmentResponse;
 import com.trungtd.departmentservice.repository.DepartmentRepository;
-import com.trungtd.departmentservice.response.MessageResponse;
 import com.trungtd.departmentservice.service.DepartmentService;
 import jakarta.ws.rs.NotFoundException;
-import lombok.Builder;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import lombok.Setter;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 import java.util.Optional;
@@ -22,8 +18,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class DepartmentServiceImpl implements DepartmentService {
     private final DepartmentRepository departmentRepository;
-
-//    private RestTemplate restTemplate;
+    private final EmployeeClient employeeClient;
 
     @Override
     public Department addDepartment(Department department) {
@@ -53,6 +48,18 @@ public class DepartmentServiceImpl implements DepartmentService {
         return departmentRepository.findById(id).orElseThrow(
                 () -> new com.trungtd.departmentservice.custom.exception.NotFoundException("Khong ton tai phong ban voi id=" + id)
         );
+    }
+
+    @Override
+    public FullFieldDepartmentResponse getDepartmentWithEmployees(Long departmentId) {
+        Department department = departmentRepository.findById(departmentId).orElseThrow(
+                () -> new com.trungtd.departmentservice.custom.exception.NotFoundException("Khong ton tai phong ban voi id=" + departmentId)
+        );
+        List<Employee> employees = employeeClient.getEmployeesByDepartment(departmentId);
+        return FullFieldDepartmentResponse.builder()
+                .name(department.getName())
+                .employeeList(employees)
+                .build();
     }
 
 //    @Override
