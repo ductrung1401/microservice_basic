@@ -1,6 +1,8 @@
 package com.trungtd.employeeservice.service;
 
 import com.trungtd.employeeservice.custom.exception.ExistsException;
+import com.trungtd.employeeservice.custom.response.MessageResponse;
+import com.trungtd.employeeservice.model.AddEmployeeDepartment;
 import com.trungtd.employeeservice.model.Employee;
 import com.trungtd.employeeservice.repository.EmployeeRepository;
 import jakarta.ws.rs.NotFoundException;
@@ -42,7 +44,22 @@ public class EmployeeService {
     public List<Employee> getEmployeesByDepartment(Long departmentId) {
         List<Employee> employees = employeeRepository.findByDepartmentId(departmentId);
         if (employees.isEmpty())
-            throw new NotFoundException("Khong ton tai employee voi department_id=" + departmentId + " nao trong he thong");
+            throw new NotFoundException("Khong ton tai employee nao voi department_id=" + departmentId + " trong he thong");
         return employees;
+    }
+
+    public MessageResponse addEmployeeToDepart(AddEmployeeDepartment req) {
+
+        return employeeRepository.findById(req.getEmployeeId())
+                .map(employee -> {
+                    employee.setDepartmentId(req.getDepartmentId());
+                    employeeRepository.save(employee);
+                    return MessageResponse.builder()
+                            .message("SUCCESS")
+                            .build();
+                })
+                .orElse(MessageResponse.builder()
+                        .message("Employee is not exist")
+                        .build());
     }
 }

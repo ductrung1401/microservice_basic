@@ -1,5 +1,4 @@
-package com.trungtd.departmentservice.model;
-
+package com.trungtd.employeeservice.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

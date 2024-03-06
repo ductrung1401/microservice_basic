@@ -1,5 +1,6 @@
 package com.trungtd.employeeservice.controller;
 
+import com.trungtd.employeeservice.model.AddEmployeeDepartment;
 import com.trungtd.employeeservice.model.Employee;
 import com.trungtd.employeeservice.service.EmployeeService;
 import lombok.RequiredArgsConstructor;
@@ -33,5 +34,10 @@ public class EmployeeController {
     @GetMapping("/department/{departmentId}")
     public ResponseEntity<?> getEmployeesByDepartment(@PathVariable Long departmentId) {
         return ResponseEntity.ok(employeeService.getEmployeesByDepartment(departmentId));
+    }
+
+    @PostMapping("/add-to-department")
+    public ResponseEntity<?> addEmployeeToDepart(@RequestBody AddEmployeeDepartment req) {
+        return ResponseEntity.ok(employeeService.addEmployeeToDepart(req));
     }
 }

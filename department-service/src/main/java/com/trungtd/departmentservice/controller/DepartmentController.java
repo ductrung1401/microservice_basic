@@ -1,13 +1,11 @@
 package com.trungtd.departmentservice.controller;
 
-import com.trungtd.departmentservice.client.EmployeeClient;
 import com.trungtd.departmentservice.model.AddEmployeeDepartment;
 import com.trungtd.departmentservice.model.Department;
 import com.trungtd.departmentservice.service.DepartmentService;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -44,9 +42,9 @@ public class DepartmentController {
         return ResponseEntity.ok(departmentService.getDepartmentWithEmployees(departmentId));
     }
 
-//    @PostMapping("/add-employee")
-//    public ResponseEntity<?> addEmployee(@RequestBody AddEmployeeDepartment req) {
-//
-//        return ResponseEntity.ok(departmentService.addEmployeeToDepartment(req));
-//    }
+    @PostMapping("/add-employee")
+    public ResponseEntity<?> addEmployee(@RequestBody AddEmployeeDepartment req) {
+
+        return ResponseEntity.ok(departmentService.addEmployeeToDepartment(req));
+    }
 }

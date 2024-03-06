@@ -2,10 +2,12 @@ package com.trungtd.departmentservice.service.implement;
 
 import com.trungtd.departmentservice.client.EmployeeClient;
 import com.trungtd.departmentservice.custom.exception.ExistsException;
+import com.trungtd.departmentservice.model.AddEmployeeDepartment;
 import com.trungtd.departmentservice.model.Department;
 import com.trungtd.departmentservice.model.Employee;
 import com.trungtd.departmentservice.model.FullFieldDepartmentResponse;
 import com.trungtd.departmentservice.repository.DepartmentRepository;
+import com.trungtd.departmentservice.response.MessageResponse;
 import com.trungtd.departmentservice.service.DepartmentService;
 import jakarta.ws.rs.NotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -52,9 +54,7 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     @Override
     public FullFieldDepartmentResponse getDepartmentWithEmployees(Long departmentId) {
-        Department department = departmentRepository.findById(departmentId).orElseThrow(
-                () -> new com.trungtd.departmentservice.custom.exception.NotFoundException("Khong ton tai phong ban voi id=" + departmentId)
-        );
+        Department department = this.getDepartmentById(departmentId);
         List<Employee> employees = employeeClient.getEmployeesByDepartment(departmentId);
         return FullFieldDepartmentResponse.builder()
                 .name(department.getName())
@@ -62,11 +62,10 @@ public class DepartmentServiceImpl implements DepartmentService {
                 .build();
     }
 
-//    @Override
-//    public MessageResponse addEmployeeToDepartment(AddEmployeeDepartment req) {
-//        Department department = this.getDepartmentById(req.getDepartmentId());
-//        MessageResponse response =
-//                restTemplate.postForObject("http://localhost:8082/api/v1/employee/add-to-department", req, MessageResponse.class);
-//        return response;
-//    }
+    @Override
+    public MessageResponse addEmployeeToDepartment(AddEmployeeDepartment req) {
+        Department department = this.getDepartmentById(req.getDepartmentId());
+        MessageResponse response = employeeClient.addEmployeeToDepart(req);
+        return response;
+    }
 }
